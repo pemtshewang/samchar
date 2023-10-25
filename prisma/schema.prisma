@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userEmail    String
+  expires      DateTime
+  user         User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+
+  @@map(name: "sessions")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  avatar        String?
+
+  sessions Session[]
+
+  grievances    Grievance[]
+  notifications Notification[]
+  announcements Announcement[]
+  Vote          Vote[]
+  role          Role           @default(User)
+
+  @@map(name: "users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map(name: "verification_tokens")
+}
+
+model Grievance {
+  id           String   @id @default(cuid())
+  email        String
+  title        String
+  description  String
+  isPublic     Boolean  @default(true) @map(name: "is_public")
+  datePosted   DateTime @default(now()) @map(name: "date_posted")
+  user         User     @relation(fields: [email], references: [email], onDelete: Cascade)
+  category     Category
+  status       Status   @default(Pending)
+  adminChecked Boolean  @default(false) @map(name: "admin_checked") // if true, the grievance will be listed in the user's grievances
+  Vote         Vote[]
+  resolvedBy   String?  @map(name: "resolved_by")
+
+  @@map(name: "grievances")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  title     String   @default("New Notification")
+  userEmail String
+  message   String
+  timestamp DateTime @default(now())
+
+  user User @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+
+  @@map(name: "notifications")
+}
+
+model Announcement {
+  id         String   @id @default(cuid())
+  title      String
+  content    String
+  datePosted DateTime @default(now()) @map(name: "date_posted")
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+
+  @@map(name: "announcements")
+}
+
+// only for upvote
+
+model Vote {
+  id          String    @id @default(cuid())
+  userEmail   String
+  grievanceId String
+  user        User      @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  grievance   Grievance @relation(fields: [grievanceId], references: [id], onDelete: Cascade)
+
+  @@unique([userEmail, grievanceId])
+  @@map(name: "votes")
+}
+
+enum Category {
+  Academics
+  Mess
+  Sports
+  Misc
+}
+
+enum Status {
+  Pending
+  Resolved
+  Rejected
+  Filtered
+}
+
+enum Role {
+  User
+  Admin
+}

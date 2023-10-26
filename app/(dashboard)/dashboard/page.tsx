@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import GrievancesAnalyticsSection from "@/components/grievances-analytics"
+// import GrievancesAnalyticsSection from "@/components/grievances-analytics"
 import TopCommentSection from "@/components/ui/top-comments-section"
 import RecentGrievanceSection from "@/components/ui/recent-grievance"
 import Link from "next/link"

@@ -1,6 +1,6 @@
 // server only
 import { Metadata } from "next"
-import GrievianceAnalyticsSection from "@/components/grievances-analytics"
+// import GrievianceAnalyticsSection from "@/components/grievances-analytics"
 import UserGrievance from "@/components/UserGrievance"
 import { Card, CardTitle, CardContent } from "@/components/ui/card";
 import Link from "next/link";
@@ -18,7 +18,7 @@ export default async function MyGrievancesPage() {
   const chartData = await getAllChartData({ type: "user" });
   return (
     <div>
-      <GrievianceAnalyticsSection chartData={chartData} />
+      {/* <GrievianceAnalyticsSection chartData={chartData} /> */}
       <div className="p-3">
         <Card className=" flex flex-col justify-center p-5 bg-gray-200">
           <CardTitle>Your Recently Posted Grievance</CardTitle>

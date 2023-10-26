@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import { format } from "date-fns";
 import { getCurrentUser } from "@/lib/session";
 
-export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
   const user = await getCurrentUser();
@@ -22,7 +21,6 @@ export async function GET(req: Request) {
   });
   let groups = new Map();
   for (let i = 0; i < monthlyGrievances.length; i++) {
-    // lets group the monthly grievances by year-month-day
     let date = format(new Date(monthlyGrievances[i].datePosted), "yyyy-MM-dd");
     if (groups.has(date)) {
       let count = groups.get(date);

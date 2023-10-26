@@ -5,7 +5,6 @@ import { Card, CardTitle, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { getAllChartData } from "@/components/graphs/config";
 import ButtonLink from "@/components/ButtonLink";
 
 export const metadata: Metadata = {

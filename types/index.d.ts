@@ -97,7 +97,6 @@ interface NotificationType {
 interface ChartAttribute {
   name: string,
   value: string,
-  fill: string,
 }
 
 interface ChartDisplayAttribute {

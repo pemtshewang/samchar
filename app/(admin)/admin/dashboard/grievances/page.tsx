@@ -7,70 +7,71 @@ import {
 import GrievancesListPage from "@/components/admin/admin-table/npage";
 import { db } from "@/lib/db";
 
-const totalGrievancesPending = db.grievance.findMany({
-  where: {
-    status: "Pending",
-  },
-  select: {
-    adminChecked: true,
-    category: true,
-    title: true,
-    description: true,
-    id: true,
-    status: true,
-    datePosted: true,
-  }
-});
-
-const totalGrievancesResolved = db.grievance.findMany({
-  where: {
-    status: "Resolved",
-  },
-  select: {
-    adminChecked: true,
-    category: true,
-    title: true,
-    description: true,
-    id: true,
-    status: true,
-    datePosted: true,
-  }
-});
-const totalGrievancesRejected = db.grievance.findMany({
-  where: {
-    status: "Rejected",
-  },
-  select: {
-    adminChecked: true,
-    category: true,
-    title: true,
-    description: true,
-    id: true,
-    status: true,
-    datePosted: true,
-  }
-});
-const totalGrievancesFiltered = db.grievance.findMany({
-  where: {
-    status: "Filtered",
-  },
-  select: {
-    adminChecked: true,
-    category: true,
-    title: true,
-    description: true,
-    id: true,
-    status: true,
-    datePosted: true,
-  }
-});
-const grievances = {
-  grievancesPending: totalGrievancesPending,
-  grievancesResolved: totalGrievancesResolved,
-  grievancesRejected: totalGrievancesRejected,
-  grievancesFiltered: totalGrievancesFiltered,
-};
 export default async function AdminGrievancePage() {
+
+  const totalGrievancesPending = await db.grievance.findMany({
+    where: {
+      status: "Pending",
+    },
+    select: {
+      adminChecked: true,
+      category: true,
+      title: true,
+      description: true,
+      id: true,
+      status: true,
+      datePosted: true,
+    }
+  });
+
+  const totalGrievancesResolved = await db.grievance.findMany({
+    where: {
+      status: "Resolved",
+    },
+    select: {
+      adminChecked: true,
+      category: true,
+      title: true,
+      description: true,
+      id: true,
+      status: true,
+      datePosted: true,
+    }
+  });
+  const totalGrievancesRejected = await db.grievance.findMany({
+    where: {
+      status: "Rejected",
+    },
+    select: {
+      adminChecked: true,
+      category: true,
+      title: true,
+      description: true,
+      id: true,
+      status: true,
+      datePosted: true,
+    }
+  });
+  const totalGrievancesFiltered = await db.grievance.findMany({
+    where: {
+      status: "Filtered",
+    },
+    select: {
+      adminChecked: true,
+      category: true,
+      title: true,
+      description: true,
+      id: true,
+      status: true,
+      datePosted: true,
+    }
+  });
+  const grievances = {
+    grievancesPending: totalGrievancesPending,
+    grievancesResolved: totalGrievancesResolved,
+    grievancesRejected: totalGrievancesRejected,
+    grievancesFiltered: totalGrievancesFiltered,
+  };
   const { grievancesPending, grievancesResolved, grievancesRejected, grievancesFiltered } = grievances;
   return (
     <Tabs defaultValue="pending" className="space-y-4">

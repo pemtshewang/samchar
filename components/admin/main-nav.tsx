@@ -3,7 +3,6 @@ import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation";
-import { AdminUserNav } from "./user-nav";
 
 export function MainNav({
   className,

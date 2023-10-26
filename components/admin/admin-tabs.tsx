@@ -12,7 +12,7 @@ import {
 } from "../ui/card"
 import { Members } from "./members"
 import AdminChart from "./overview"
-import Export from "@/app/(admin)/(download)/PDFChart"
+import Export from "@/components/(download)/PDFChart";
 import { useEffect, useState } from "react"
 // Report tab starts =================================>
 export function ReportTab() {

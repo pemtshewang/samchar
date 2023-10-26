@@ -40,7 +40,12 @@ export function OverviewTab() {
   const [count, setCount] = useState(3);
   useEffect(() => {
     countGrievances().then((data) => {
-      setGrievancesCount(data);
+      setGrievancesCount({
+        totalGrievances: data.totalGrievances,
+        totalGrievancesPending: data.totalGrievancesPending,
+        totalGrievancesResolved: data.totalGrievancesResolved,
+        totalGrievancesRejected: data.totalGrievancesRejected,
+      });
     });
   }, []);
   const { totalGrievances, totalGrievancesPending, totalGrievancesResolved, totalGrievancesRejected } = grievancesCount;

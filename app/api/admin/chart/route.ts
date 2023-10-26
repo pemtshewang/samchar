@@ -1,8 +1,13 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { format } from "date-fns";
+import { getCurrentUser } from "@/lib/session";
 
 export async function GET(req: Request) {
+  const user = await getCurrentUser();
+  if (!user) {
+    return NextResponse.json({ message: "User not logged in" }, { status: 401 });
+  }
   // group the monthly grievances by format YYYY-MM-DD
   const monthlyGrievances = await db.grievance.groupBy({
     by: ['datePosted'],

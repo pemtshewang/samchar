@@ -14,10 +14,9 @@ export const metadata: Metadata = {
 }
 
 export default async function MyGrievancesPage() {
-  const chartData = await getAllChartData({ type: "user" });
   return (
     <div>
-      <GrievianceAnalyticsSection chartData={chartData} />
+      <GrievianceAnalyticsSection type="user" />
       <div className="p-3">
         <Card className=" flex flex-col justify-center p-5 bg-gray-200">
           <CardTitle>Your Recently Posted Grievance</CardTitle>

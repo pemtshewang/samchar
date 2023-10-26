@@ -7,18 +7,18 @@ export async function GET(request: Request): Promise<NextResponse> {
   if (!user) {
     return NextResponse.json({ message: "User not logged in" }, { status: 401 });
   }
-  const totalGrievancesCount = db.grievance.count();
-  const totalGrievancesPendingCount = db.grievance.count({
+  const totalGrievancesCount = await db.grievance.count();
+  const totalGrievancesPendingCount = await db.grievance.count({
     where: {
       status: "Pending",
     },
   });
-  const totalGrievancesResolvedCount = db.grievance.count({
+  const totalGrievancesResolvedCount = await db.grievance.count({
     where: {
       status: "Resolved",
     },
   });
-  const totalGrievancesRejectedCount = db.grievance.count({
+  const totalGrievancesRejectedCount = await db.grievance.count({
     where: {
       status: "Rejected",
     },

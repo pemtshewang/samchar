@@ -48,7 +48,12 @@ export function OverviewTab() {
       });
     });
   }, []);
-  const { totalGrievances, totalGrievancesPending, totalGrievancesResolved, totalGrievancesRejected } = grievancesCount;
+  const {
+    totalGrievances,
+    totalGrievancesPending,
+    totalGrievancesResolved,
+    totalGrievancesRejected,
+  } = grievancesCount;
   return (
     <TabsContent value="overview" className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -118,7 +123,7 @@ export function OverviewTab() {
           <CardHeader>
             <CardTitle>Members joined</CardTitle>
             <CardDescription>
-              {count.toString()} {count > 1 ? " members " : " member "} joined till date
+              {count} {count > 1 ? " members " : " member "} joined till date
             </CardDescription>
           </CardHeader>
           <CardContent>

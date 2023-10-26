@@ -22,7 +22,7 @@ export default function DashboardPage() {
             Notifications
           </TabsTrigger>
         </TabsList>
-        {/* <OverviewTab /> */}
+        <OverviewTab />
         <ReportTab />
         <NotificationTab />
       </Tabs>

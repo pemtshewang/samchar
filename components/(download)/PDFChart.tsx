@@ -51,7 +51,7 @@ export default class Export extends Component {
 
 async function getGrievances() {
   const res = await fetch('https://samchar.vercel.app/api/admin/chart', {
-    cache: "no-cache",
+    cache: "no-store",
   });
   const data = await res.json();
   return data;

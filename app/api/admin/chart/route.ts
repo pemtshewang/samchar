@@ -1,4 +1,3 @@
-// get the monthly grievances
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { format } from "date-fns";

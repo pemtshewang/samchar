@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 
 
 export default async function GrievancesPage() {
+  const user = await getCurrentUser();
   return (
     <div>
       <GrievancesAnalyticsSection type={"all"} />

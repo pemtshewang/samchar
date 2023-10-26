@@ -8,7 +8,6 @@ import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
 import { UserNav } from '@/components/user-profile-nav';
 
-export const dynamic = "force-dynamic";
 
 export default async function Layout({ children }) {
   const user = await getCurrentUser();

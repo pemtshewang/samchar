@@ -35,7 +35,12 @@ export default function AdminGrievancePage() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     getGrievances().then((data) => {
-      setGrievances(data);
+      setGrievances({
+        grievancesPending: data.grievancesPending,
+        grievancesResolved: data.grievancesResolved,
+        grievancesRejected: data.grievancesRejected,
+        grievancesFiltered: data.grievancesFiltered,
+      });
       setLoading(false);
     });
   }, []);

@@ -4,20 +4,39 @@ import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
   const grievances = await db.grievance.findMany();
-  const grievanceCountByCategoryAndStatus = {};
+  const grievanceCountByCategoryAndStatus = {
+    Pending: {
+      Academics: 0,
+      Mess: 0,
+      Sports: 0,
+      Misc: 0
+    },
+    Resolved: {
+      Academics: 0,
+      Mess: 0,
+      Sports: 0,
+      Misc: 0
+    },
+    Rejected: {
+      Academics: 0,
+      Mess: 0,
+      Sports: 0,
+      Misc: 0
+    }
+  };
   for (const grievance of grievances) {
     const category = grievance.category;
     const status = grievance.status;
 
-    if (!grievanceCountByCategoryAndStatus[category]) {
-      grievanceCountByCategoryAndStatus[category] = {};
+    if (!grievanceCountByCategoryAndStatus[status]) {
+      grievanceCountByCategoryAndStatus[status] = {};
     }
 
-    if (!grievanceCountByCategoryAndStatus[category][status]) {
-      grievanceCountByCategoryAndStatus[category][status] = 0;
+    if (!grievanceCountByCategoryAndStatus[status][category]) {
+      grievanceCountByCategoryAndStatus[status][category] = 0;
     }
 
-    grievanceCountByCategoryAndStatus[category][status]++;
+    grievanceCountByCategoryAndStatus[status][category]++;
   }
   return NextResponse.json(grievanceCountByCategoryAndStatus);
 }

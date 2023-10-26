@@ -35,7 +35,8 @@ export default async function RecentGrievanceSection() {
           />
         ) : (
           <div className="flex flex-col justify-center items-center">
-            <h1 className="text-2xl font-bold">No Grievances Posted Yet</h1>
+            <h1 className="text-xl font-bold p-2">Recently Posted Grievance</h1>
+            <p className="text-lg font-bold p-1">No Grievances Posted Yet</p>
             <p className="text-lg text-gray-500">Check back later</p>
           </div>
         )

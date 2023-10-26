@@ -6,9 +6,13 @@ import {
 } from "@/components/ui/tabs";
 import GrievancesListPage from "@/components/admin/admin-table/npage";
 import { db } from "@/lib/db";
+import { getCurrentUser } from "@/lib/session";
+
+export const dynamic = "force-static";
 
 export default async function AdminGrievancePage() {
 
+  const user = await getCurrentUser();
   const totalGrievancesPending = await db.grievance.findMany({
     where: {
       status: "Pending",

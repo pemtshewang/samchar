@@ -1,9 +1,16 @@
 import { db } from "@/lib/db";
+import { getCurrentUser } from "@/lib/session";
 
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
-  const grievances = await db.grievance.findMany();
+  const user = await getCurrentUser();
+  const grievances = await db.grievance.findMany({
+    where: {
+      email: user.email,
+      user: user
+    }
+  });
   const grievanceCountByCategoryAndStatus = {};
   for (const grievance of grievances) {
     const category = grievance.category;

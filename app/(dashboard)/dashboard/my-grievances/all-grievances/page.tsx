@@ -32,7 +32,7 @@ export default function AllMyGrievances() {
   return (
     <section className="p-5 space-y-5">
       <div className="flex justify-end">
-        <Button variant="default" className="w-1/4"
+        <Button variant="default" className="w-fit"
           onClick={() => {
             setLoading(true);
             getGrievances().then((grievances) => {

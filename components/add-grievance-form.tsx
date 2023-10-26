@@ -65,6 +65,7 @@ export function AddGrievanceComponent({ edit, title, id, description, category }
           title: "Grievance Updated",
           description: "Your grievance has been updated successfully.",
           variant: "default",
+          className: "bg-green-500"
         })
         window.location.href = "/dashboard/my-grievances/all-grievances";
       }

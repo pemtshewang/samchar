@@ -15,7 +15,7 @@ export default async function GrievancesPage() {
   const chartData = await getAllChartData({ type: "all" });
   return (
     <div>
-      <GrievancesAnalyticsSection chartData={chartData} />
+      {/* <GrievancesAnalyticsSection chartData={chartData} /> */}
       <TopCommentSection />
       <div className="ml-auto p-5">
         To see all grievances posted by users, go to <Link href="/dashboard/grievances/all-grievances" className="underline italic">See all grievances</Link>

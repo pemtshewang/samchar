@@ -34,8 +34,8 @@ export function SiteFooter() {
           </a>
         </div>
         <div className="flex gap-5">
-          <Link className=""
-            href="grievances.cst.edu.bt">
+          <Link className="/"
+            href="#">
             grievances.cst.edu.bt
           </Link>
           <div className={cn("border-r w-100")}>

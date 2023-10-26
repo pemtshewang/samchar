@@ -1,3 +1,4 @@
+"use client"
 import { Icons } from "@/components/icons"
 import { Row } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
@@ -16,7 +17,7 @@ interface DataTableRowActionsProps<TData> {
 }
 
 async function updateGrievanceChecked(id: string) {
-  const response = await fetch(`http://localhost:3000/api/admin/all-grievances/update-status?id=${id}&action=adminCheck`, {
+  const response = await fetch(`https://samchar.vercel.app/api/admin/all-grievances/update-status?id=${id}&action=adminCheck`, {
     cache: "no-cache",
   });
   const result = await response.json();
@@ -26,7 +27,7 @@ async function updateGrievanceChecked(id: string) {
   return result;
 }
 async function updateGrievanceStatus(id: string, status: string) {
-  const response = await fetch(`http://localhost:3000/api/admin/all-grievances/update-status?id=${id}&action=${status}`, {
+  const response = await fetch(`https://samchar.vercel.app/api/admin/all-grievances/update-status?id=${id}&action=${status}`, {
     cache: "no-cache",
   });
   const result = await response.json();

@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/tabs";
 import GrievancesListPage from "@/components/admin/admin-table/npage";
 import { useState, useEffect } from "react";
+import { RefreshCw } from "lucide-react";
 
 async function getGrievances() {
   const res = await fetch('https://samchar.vercel.app/api/admin/all-grievances/grievances-by-status', {
@@ -24,7 +25,6 @@ async function getGrievances() {
     grievancesFiltered,
   };
 }
-
 export default function AdminGrievancePage() {
   const [grievances, setGrievances] = useState({
     grievancesPending: [],
@@ -51,41 +51,51 @@ export default function AdminGrievancePage() {
     grievancesFiltered,
   } = grievances;
   return (
-    <Tabs defaultValue="pending" className="space-y-4">
-      <TabsList>
-        <TabsTrigger value="pending">
-          Pending
-        </TabsTrigger>
-        <TabsTrigger value="resolved" >
-          Resolved
-        </TabsTrigger>
-        <TabsTrigger value="rejected">
-          Rejected
-        </TabsTrigger>
-        <TabsTrigger value="filtered">
-          Filtered
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value="pending" className="space-y-4">
-        <div>
-          <GrievancesListPage type="pending" grievances={grievancesPending} />
-        </div>
-      </TabsContent>
-      <TabsContent value="resolved" className="space-y-4">
-        <div>
-          <GrievancesListPage type="resolved" grievances={grievancesResolved} />
-        </div>
-      </TabsContent>
-      <TabsContent value="rejected" className="space-y-4">
-        <div>
-          <GrievancesListPage type="rejected" grievances={grievancesRejected} />
-        </div>
-      </TabsContent>
-      <TabsContent value="filtered" className="space-y-4">
-        <div>
-          <GrievancesListPage type="filtered" grievances={grievancesFiltered} />
-        </div>
-      </TabsContent>
-    </Tabs>
+    <>
+      {
+        loading ? (
+          <div className="flex items-center justify-center min-h-screen">
+            <RefreshCw className="animate-spin h-6 w-6 text-muted-foreground" />
+          </div>
+        ) : (
+          <Tabs defaultValue="pending" className="space-y-4">
+            <TabsList>
+              <TabsTrigger value="pending">
+                Pending
+              </TabsTrigger>
+              <TabsTrigger value="resolved" >
+                Resolved
+              </TabsTrigger>
+              <TabsTrigger value="rejected">
+                Rejected
+              </TabsTrigger>
+              <TabsTrigger value="filtered">
+                Filtered
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="pending" className="space-y-4">
+              <div>
+                <GrievancesListPage type="pending" grievances={grievancesPending} />
+              </div>
+            </TabsContent>
+            <TabsContent value="resolved" className="space-y-4">
+              <div>
+                <GrievancesListPage type="resolved" grievances={grievancesResolved} />
+              </div>
+            </TabsContent>
+            <TabsContent value="rejected" className="space-y-4">
+              <div>
+                <GrievancesListPage type="rejected" grievances={grievancesRejected} />
+              </div>
+            </TabsContent>
+            <TabsContent value="filtered" className="space-y-4">
+              <div>
+                <GrievancesListPage type="filtered" grievances={grievancesFiltered} />
+              </div>
+            </TabsContent>
+          </Tabs>
+        )
+      }
+    </>
   )
 }

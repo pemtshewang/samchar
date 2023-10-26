@@ -1,3 +1,4 @@
+"use client"
 import {
   Avatar,
   AvatarFallback,
@@ -5,7 +6,8 @@ import {
 } from "@/components/ui/avatar";
 import { Icons } from "../icons";
 import format from "date-fns/format";
-import { db } from "@/lib/db";
+import { useState, useEffect } from "react";
+import { RefreshCw } from "lucide-react";
 
 async function Member({ email, grievancesCount }: {
   email: string,
@@ -51,66 +53,72 @@ async function MemberDetailCard({ email, dateJoined, grievancesCount }: {
     </div>
   )
 }
-export async function Members() {
-  const users = await db.user.findMany({
-    where: {
-      role: "User",
-    },
-    select: {
-      createdAt: true,
-      email: true,
-      grievances: {
-        select: {
-          id: true,
-        },
-      },
-    },
-  });
+async function getUsersOnly() {
+  const response = await fetch("https://samchar.vercel.app/api/admin/get-all-members");
+  const data = await response.json();
+  return data;
+}
+export function Members() {
+  // request the users jere
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getUsersOnly().then((data) => {
+      setUsers(data);
+      setLoading(false);
+    });
+  }, []);
   return (
     <div className="space-y-3">
       {
-        users.map((user) => {
-          return (
-            <Member
-              key={user.email}
-              email={user.email}
-              grievancesCount={user.grievances.length.toString()}
-            />
-          )
-        })
+        loading ? (
+          <div className="flex items-center justify-center">
+            <RefreshCw className="animate-spin h-6 w-6 text-muted-foreground" />
+          </div>
+        ) : (
+          users.map((user) => {
+            return (
+              <Member
+                key={user.email}
+                email={user.email}
+                grievancesCount={user.grievances.length.toString()}
+              />
+            )
+          })
+        )
       }
     </div>
   )
 }
 
-export async function DetailMembers({ className }) {
-  const users = await db.user.findMany({
-    where: {
-      role: "User",
-    },
-    select: {
-      createdAt: true,
-      email: true,
-      grievances: {
-        select: {
-          id: true,
-        },
-      },
-    },
-  });
+export function DetailMembers() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getUsersOnly().then((data) => {
+      setUsers(data);
+      setLoading(false);
+    });
+  }, []);
   return (
-    <div className={className}>
+    <div className={"space-y-3"}>
       {
-        users.map((user) => {
-          return (
-            <MemberDetailCard
-              key={user.email}
-              email={user.email}
-              dateJoined={user.createdAt.toString()}
-              grievancesCount={user.grievances.length.toString()}
-            />
-          )
-        })
+        loading ? (
+          <div className="flex items-center justify-center">
+            <RefreshCw className="animate-spin h-6 w-6 text-muted-foreground" />
+          </div>
+        ) : (
+          users.map((user) => {
+            return (
+              <MemberDetailCard
+                key={user.email}
+                email={user.email}
+                dateJoined={user.createdAt.toString()}
+                grievancesCount={user.grievances.length.toString()}
+              />
+            )
+          })
+        )
       }
     </div>
   )

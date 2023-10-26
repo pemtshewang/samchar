@@ -4,13 +4,11 @@ import { useEffect, useState } from 'react';
 
 async function getGrievances() {
   const res = await fetch('https://samchar.vercel.app/api/admin/chart', {
-    cache: "no-cache",
+    cache: "no-store",
   });
   const data = await res.json();
   return data;
 }
-
-
 
 export default function AdminChart() {
 
@@ -29,7 +27,6 @@ export default function AdminChart() {
       });
     });
   }, []);
-
 
   // Monthly Grievances Chart
   const groupedData = data.monthlyGrievances.map(([month, count]) => ({ month, count }));

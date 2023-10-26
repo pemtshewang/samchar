@@ -12,9 +12,6 @@ import { Button } from '@/components/ui/button';
 import { PrinterIcon } from 'lucide-react';
 
 export default class Export extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   printDocument() {
     const input = document.getElementById('divToPrint');

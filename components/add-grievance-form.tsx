@@ -26,7 +26,6 @@ export function AddGrievanceComponent({ edit, title, id, description, category }
   category?: string
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   type FormData = z.infer<typeof grievanceSchema>;
   const {
     setValue,
@@ -84,6 +83,7 @@ export function AddGrievanceComponent({ edit, title, id, description, category }
           title: "Grievance Submitted",
           description: "Your grievance has been submitted successfully.",
           variant: "default",
+          className: "bg-green-500"
         })
         window.location.href = "/dashboard/my-grievances/all-grievances";
       }

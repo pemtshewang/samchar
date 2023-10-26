@@ -52,7 +52,7 @@ export default function GrievianceAnalyticsSection({ type }: { type: "all" | "us
       setChartData(data);
       setLoading(false)
     });
-  }, []);
+  }, [type]);
   return (
     <section className="grid lg:grid-cols-3 sm:flex-col p-3 justify-items-center gap-x-2" >
       {

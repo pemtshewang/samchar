@@ -1,3 +1,4 @@
+"use client"
 import {
   Tabs,
   TabsList,
@@ -5,77 +6,36 @@ import {
   TabsContent
 } from "@/components/ui/tabs";
 import GrievancesListPage from "@/components/admin/admin-table/npage";
-import { db } from "@/lib/db";
-import { getCurrentUser } from "@/lib/session";
+import { useState, useEffect } from "react";
 
+async function getGrievances() {
+  const res = await fetch('https://samchar.vercel.app/api/admin/all-grievances/grievances-by-status', {
+    cache: 'no-store'
+  });
+  const data = await res.json();
+  return data;
+}
 
 export default async function AdminGrievancePage() {
-
-  const user = await getCurrentUser();
-  const totalGrievancesPending = await db.grievance.findMany({
-    where: {
-      status: "Pending",
-    },
-    select: {
-      adminChecked: true,
-      category: true,
-      title: true,
-      description: true,
-      id: true,
-      status: true,
-      datePosted: true,
-    }
+  const [grievances, setGrievances] = useState({
+    grievancesPending: [],
+    grievancesResolved: [],
+    grievancesRejected: [],
+    grievancesFiltered: [],
   });
-
-  const totalGrievancesResolved = await db.grievance.findMany({
-    where: {
-      status: "Resolved",
-    },
-    select: {
-      adminChecked: true,
-      category: true,
-      title: true,
-      description: true,
-      id: true,
-      status: true,
-      datePosted: true,
-    }
-  });
-  const totalGrievancesRejected = await db.grievance.findMany({
-    where: {
-      status: "Rejected",
-    },
-    select: {
-      adminChecked: true,
-      category: true,
-      title: true,
-      description: true,
-      id: true,
-      status: true,
-      datePosted: true,
-    }
-  });
-  const totalGrievancesFiltered = await db.grievance.findMany({
-    where: {
-      status: "Filtered",
-    },
-    select: {
-      adminChecked: true,
-      category: true,
-      title: true,
-      description: true,
-      id: true,
-      status: true,
-      datePosted: true,
-    }
-  });
-  const grievances = {
-    grievancesPending: totalGrievancesPending,
-    grievancesResolved: totalGrievancesResolved,
-    grievancesRejected: totalGrievancesRejected,
-    grievancesFiltered: totalGrievancesFiltered,
-  };
-  const { grievancesPending, grievancesResolved, grievancesRejected, grievancesFiltered } = grievances;
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getGrievances().then((data) => {
+      setGrievances(data);
+      setLoading(false);
+    });
+  }, []);
+  const {
+    grievancesPending,
+    grievancesResolved,
+    grievancesRejected,
+    grievancesFiltered,
+  } = grievances;
   return (
     <Tabs defaultValue="pending" className="space-y-4">
       <TabsList>

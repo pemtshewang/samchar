@@ -44,6 +44,7 @@ export default function AdminGrievancePage() {
       setLoading(false);
     });
   }, []);
+  console.log(grievances)
   const {
     grievancesPending,
     grievancesResolved,

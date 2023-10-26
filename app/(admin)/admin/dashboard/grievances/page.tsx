@@ -16,7 +16,7 @@ async function getGrievances() {
   return data;
 }
 
-export default async function AdminGrievancePage() {
+export default function AdminGrievancePage() {
   const [grievances, setGrievances] = useState({
     grievancesPending: [],
     grievancesResolved: [],

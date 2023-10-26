@@ -13,10 +13,10 @@ async function getGrievances() {
     cache: 'no-store'
   });
   const data = await res.json();
-  const grievancesPending = data.grievances.filter((grievance) => grievance.status === 'Pending');
-  const grievancesResolved = data.grievances.filter((grievance) => grievance.status === 'Resolved');
-  const grievancesRejected = data.grievances.filter((grievance) => grievance.status === 'Rejected');
-  const grievancesFiltered = data.grievances.filter((grievance) => grievance.status === 'Filtered');
+  const grievancesPending = data.filter((grievance) => grievance.status === 'Pending');
+  const grievancesResolved = data.filter((grievance) => grievance.status === 'Resolved');
+  const grievancesRejected = data.filter((grievance) => grievance.status === 'Rejected');
+  const grievancesFiltered = data.filter((grievance) => grievance.status === 'Filtered');
   return {
     grievancesPending,
     grievancesResolved,
@@ -44,7 +44,6 @@ export default function AdminGrievancePage() {
       setLoading(false);
     });
   }, []);
-  console.log(grievances)
   const {
     grievancesPending,
     grievancesResolved,

@@ -1,13 +1,13 @@
-// route to update read-status 
-// route to update resolve status
-// route to update filter status
-// route to update reject status
-
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { makeNotification } from "@/lib/notifications";
+import { getCurrentUser } from "@/lib/session";
 
 export async function GET(req: Request) {
+  const user = await getCurrentUser();
+  if (!user) {
+    return NextResponse.json({ message: "User not logged in" }, { status: 401 });
+  }
   const url = new URL(req.url);
   const { id, action } = Object.fromEntries(url.searchParams);
   if (action === "adminCheck") {
@@ -98,10 +98,3 @@ export async function GET(req: Request) {
     return NextResponse.json(filtered);
   }
 }
-
-
-
-
-
-
-

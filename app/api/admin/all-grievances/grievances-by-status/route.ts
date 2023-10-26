@@ -1,5 +1,3 @@
-// return all grievances by category
-// endpoint: /api/admin/all-grievances/grievances-by-category
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 

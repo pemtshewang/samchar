@@ -1,13 +1,17 @@
-// getting the total number of all grievances that has been posted into the database
-import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
+import { db } from "@/lib/db";
+import { getCurrentUser } from "@/lib/session";
 
 export async function GET(req: Request) {
+  const user = getCurrentUser();
+  if (!user) {
+    return NextResponse.json({ message: "User not logged in" }, { status: 401 });
+  }
   const totalGrievancesCount = await db.grievance.count();
   const totalGrievancesPendingCount = await db.grievance.count({
     where: {
-      status: "Pending",
-    },
+      status: "Pending"
+    }
   });
   const totalGrievancesResolvedCount = await db.grievance.count({
     where: {

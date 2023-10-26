@@ -13,7 +13,16 @@ async function getGrievances() {
     cache: 'no-store'
   });
   const data = await res.json();
-  return data;
+  const grievancesPending = data.grievances.filter((grievance) => grievance.status === 'Pending');
+  const grievancesResolved = data.grievances.filter((grievance) => grievance.status === 'Resolved');
+  const grievancesRejected = data.grievances.filter((grievance) => grievance.status === 'Rejected');
+  const grievancesFiltered = data.grievances.filter((grievance) => grievance.status === 'Filtered');
+  return {
+    grievancesPending,
+    grievancesResolved,
+    grievancesRejected,
+    grievancesFiltered,
+  };
 }
 
 export default function AdminGrievancePage() {

@@ -5,14 +5,33 @@ import { NextResponse } from "next/server";
 
 async function getCategoricalGrievances({ type, status }: { type: string, status: string }) {
   const user = await getCurrentUser();
-  const grievances = await db.grievance.findMany({
-    where: (type === 'all' ? {} : { email: user.email }),
-    select: {
-      category: true,
-      status: true,
-    },
-  });
-
+  // const grievances = await db.grievance.findMany({
+  //   where: (type === 'all' ? {} : { email: user.email }),
+  //   select: {
+  //     category: true,
+  //     status: true,
+  //   },
+  // });
+  let grievances = [];
+  if (type === 'all') {
+    grievances = await db.grievance.findMany({
+      select: {
+        category: true,
+        status: true,
+      },
+    });
+  } else {
+    grievances = await db.grievance.findMany({
+      where: {
+        email: user.email,
+        user: user
+      },
+      select: {
+        category: true,
+        status: true,
+      },
+    });
+  }
   const grievanceCount = {
     Academics: { all: 0, rejected: 0, resolved: 0 },
     Mess: { all: 0, rejected: 0, resolved: 0 },

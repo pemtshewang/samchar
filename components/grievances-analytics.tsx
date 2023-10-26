@@ -9,7 +9,6 @@ import {
 import CustomPieChart from "./graphs/chart";
 import { useEffect, useState } from "react";
 
-
 async function getAllChartData({ type }: { type: "all" | "user" }) {
   let result = [];
   if (type === "all") {
@@ -38,9 +37,9 @@ async function getAllChartData({ type }: { type: "all" | "user" }) {
     description: `Total grievances ${header.toLowerCase()} till date`,
     data: Object.entries(values).map(([name, value]) => ({
       name: name,
-      value: value
+      value: value,
+      fill: fill[index]
     })),
-    fill: fill[index]
   }));
 }
 

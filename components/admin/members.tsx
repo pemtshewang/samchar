@@ -101,7 +101,7 @@ export function DetailMembers() {
     });
   }, []);
   return (
-    <div className={"space-y-3"}>
+    <div className={"space-y-10"}>
       {
         loading ? (
           <div className="flex items-center justify-center">

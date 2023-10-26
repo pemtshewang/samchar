@@ -7,7 +7,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import CustomPieChart from "./graphs/chart";
-import { ChartDisplayAttributeType } from "@/types";
 import { useEffect, useState } from "react";
 
 
@@ -33,13 +32,15 @@ async function getAllChartData({ type }: { type: "all" | "user" }) {
     });
     result = await res.json();
   }
-  return Object.entries(result).map(([header, values]) => ({
+  const fill = ["#0088FE", "#00C49F", "#FF6384", "#FFF121"]
+  return Object.entries(result).map(([header, values], index) => ({
     header: header,
     description: `Total grievances ${header.toLowerCase()} till date`,
     data: Object.entries(values).map(([name, value]) => ({
       name: name,
       value: value
-    }))
+    })),
+    fill: fill[index]
   }));
 }
 

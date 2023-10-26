@@ -1,4 +1,4 @@
-import { TypographyH4, TypographyLead, TypographyP, TypographyH3 } from "./typography/typography"
+import { TypographyH4, TypographyLead, TypographyP } from "./typography/typography"
 import { Icons } from "./icons"
 import { cn } from "@/lib/utils"
 import { AnnouncementContentType } from "@/types";
@@ -10,6 +10,7 @@ export function PaddedIcon() {
     </div>
   )
 }
+
 export default function AnnouncementCard({ title, date, content }: AnnouncementContentType): React.ReactElement<AnnouncementContentType> {
   return (
     <div className={cn("card w-full bg-gray-300 dark:bg-transparent flex border p-5 h-[30vh] shadow-xl")} >

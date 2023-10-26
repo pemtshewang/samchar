@@ -1,4 +1,3 @@
-"use client"
 // Link -> /admin/dashboard
 import {
   Tabs,

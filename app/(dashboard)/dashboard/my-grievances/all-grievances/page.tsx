@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import GrievanceDetailCard from "@/components/grievance-display";
 import type { Grievance } from "@prisma/client";
+import { RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function AllMyGrievances() {
   async function getGrievances(): Promise<Grievance[]> {
@@ -17,34 +19,65 @@ export default function AllMyGrievances() {
   }
 
   const [grievances, setGrievances] = useState<Grievance[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getGrievances().then((grievances) => {
       setGrievances(grievances);
+      setLoading(false);
     });
   }, []);
 
 
   return (
     <section className="p-5 space-y-5">
-      {grievances.length > 0 ? (
-        grievances.map((grievance, index) => {
-          return (
-            <GrievanceDetailCard
-              key={grievance.id}
-              id={grievance.id}
-              title={grievance.title}
-              posted={new Date(grievance.datePosted).toLocaleDateString()}
-              grievance={grievance.description}
-              status={grievance.status}
-              category={grievance.category}
-              user={true}
-            />
-          );
-        })
-      ) : (
-        <p>No grievances found</p>
-      )}
+      <div className="flex justify-end">
+        <Button variant="default" className="w-1/4"
+          onClick={() => {
+            setLoading(true);
+            getGrievances().then((grievances) => {
+              setGrievances(grievances);
+              setLoading(false);
+            });
+          }}
+        >
+          Refresh &nbsp;
+          {
+            loading ? (
+              <RefreshCw className="animate-spin" />
+            ) : (
+              <RefreshCw />
+            )
+          }
+        </Button>
+      </div>
+      {
+        loading ? (
+          <div className="flex justify-center items-center">
+            <RefreshCw className="animate-spin" />
+          </div>
+        ) : (
+          grievances.length > 0 ? (
+            grievances.map((grievance) => {
+              return (
+                <GrievanceDetailCard
+                  key={grievance.id}
+                  id={grievance.id}
+                  title={grievance.title}
+                  posted={new Date(grievance.datePosted).toLocaleDateString()}
+                  grievance={grievance.description}
+                  status={grievance.status}
+                  category={grievance.category}
+                  user={true}
+                />)
+            })
+          ) : (
+            <div className="flex justify-center items-center">
+              <h1>No Grievances</h1>
+            </div>
+          )
+        )
+      }
     </section>
   );
 }

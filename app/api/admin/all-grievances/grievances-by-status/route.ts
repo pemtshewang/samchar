@@ -2,8 +2,6 @@ import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/session";
 
-export const dynamic = "force-dynamic";
-
 export async function GET(req: Request) {
   const user = getCurrentUser();
   if (!user) {
@@ -66,10 +64,10 @@ export async function GET(req: Request) {
     }
   });
   const grievances = {
-    "grievancesPending": totalGrievancesPending,
-    "grievancesResolved": totalGrievancesResolved,
-    "grievancesRejected": totalGrievancesRejected,
-    "grievancesFiltered": totalGrievancesFiltered,
+    grievancesPending: totalGrievancesPending,
+    grievancesResolved: totalGrievancesResolved,
+    grievancesRejected: totalGrievancesRejected,
+    grievancesFiltered: totalGrievancesFiltered,
   };
   return NextResponse.json(grievances);
 }

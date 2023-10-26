@@ -31,14 +31,20 @@ async function getAllChartData({ type }: { type: "all" | "user" }) {
         "Content-Type": "application/json",
       },
     });
-    const data = await res.json();
-    result = data;
+    result = await res.json();
   }
-  return result;
+  return Object.entries(result).map(([header, values]) => ({
+    header: header,
+    description: `Total grievances ${header.toLowerCase()} till date`,
+    data: Object.entries(values).map(([name, value]) => ({
+      name: name,
+      value: value
+    }))
+  }));
 }
 
 export default function GrievianceAnalyticsSection({ type }: { type: "all" | "user" }) {
-  const [chartData, setChartData] = useState<ChartDisplayAttributeType[]>([]);
+  const [chartData, setChartData] = useState([]);
   useEffect(() => {
     getAllChartData({ type }).then((data) => {
       setChartData(data);

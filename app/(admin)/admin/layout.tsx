@@ -1,14 +1,36 @@
 import AuthPageHeader from "@/components/auth-header"
 import { SiteFooter } from "@/components/site-footer"
-export default function Layout({ children }: {
+import { getCurrentUser } from "@/lib/session";
+import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
+
+export default async function Layout({ children }: {
   children: React.ReactNode
 }) {
-  return (
-    <div className="">
-      <AuthPageHeader />
-      <div className="p-10">
-        {children}
-      </div>
-      <SiteFooter />
-    </div>)
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/admin/login");
+  }
+  // if user exists then do this
+  if (user) {
+    const userRole = await db.user.findUnique({
+      where: {
+        email: user.email,
+      },
+      select: {
+        role: true,
+      },
+    });
+    if (userRole?.role === "User") {
+      redirect("/");
+    }
+    return (
+      <div className="">
+        <AuthPageHeader />
+        <div className="p-10">
+          {children}
+        </div>
+        <SiteFooter />
+      </div>)
+  }
 }

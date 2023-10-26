@@ -1,7 +1,6 @@
 "use client"
 import { CartesianGrid, Tooltip, AreaChart, BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Area, Label } from 'recharts';
 import { useEffect, useState } from 'react';
-import GrievianceAnalyticsSection from '../grievances-analytics';
 
 async function getGrievances() {
   const res = await fetch('https://samchar.vercel.app/api/admin/chart', {
@@ -50,47 +49,46 @@ export default function AdminChart() {
         <p className="font-bold indent-2 p-2">
           Grievances posted per day
         </p>
-        <GrievianceAnalyticsSection type='all' />
-        {/*   <ResponsiveContainer width="100%" height={350} > */}
-        {/*     <AreaChart width={730} height={250} data={groupedData} */}
-        {/*       margin={{ top: 10, right: 30, left: 0, bottom: 0 }}> */}
-        {/*       <defs> */}
-        {/*         <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1"> */}
-        {/*           <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} /> */}
-        {/*           <stop offset="95%" stopColor="#8884d8" stopOpacity={0} /> */}
-        {/*         </linearGradient> */}
-        {/*       </defs> */}
-        {/*       <XAxis dataKey="month" /> */}
-        {/*       <YAxis /> */}
-        {/*       <CartesianGrid strokeDasharray="3 3" /> */}
-        {/*       <Tooltip /> */}
-        {/*       <Area type="monotone" dataKey="count" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" /> */}
-        {/*     </AreaChart> */}
-        {/*   </ResponsiveContainer> */}
-        {/* </div> */}
-        {/* <div className="p-5"> */}
-        {/*   <p className="font-bold indent-2 p-2"> */}
-        {/*     Grievances sorted by category */}
-        {/*   </p> */}
-        {/*   <ResponsiveContainer width="100%" height={350}> */}
-        {/*     <BarChart data={grievancesByCategoryData}> */}
-        {/*       <XAxis dataKey="category" /> */}
-        {/*       <YAxis /> */}
-        {/*       <Bar dataKey="count" fill="#882458" /> */}
-        {/*     </BarChart> */}
-        {/*   </ResponsiveContainer> */}
-        {/* </div> */}
-        {/* <div className="p-5"> */}
-        {/*   <p className="font-bold indent-2 p-2"> */}
-        {/*     Grievances sorted by status */}
-        {/*   </p> */}
-        {/*   <ResponsiveContainer width="100%" height={350}> */}
-        {/*     <BarChart data={grievancesByStatusData}> */}
-        {/*       <XAxis dataKey="status" /> */}
-        {/*       <YAxis /> */}
-        {/*       <Bar dataKey="count" fill="#1215c8" /> */}
-        {/*     </BarChart> */}
-        {/*   </ResponsiveContainer> */}
+        <ResponsiveContainer width="100%" height={350} >
+          <AreaChart width={730} height={250} data={groupedData}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis dataKey="month" />
+            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip />
+            <Area type="monotone" dataKey="count" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="p-5">
+        <p className="font-bold indent-2 p-2">
+          Grievances sorted by category
+        </p>
+        <ResponsiveContainer width="100%" height={350}>
+          <BarChart data={grievancesByCategoryData}>
+            <XAxis dataKey="category" />
+            <YAxis />
+            <Bar dataKey="count" fill="#882458" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="p-5">
+        <p className="font-bold indent-2 p-2">
+          Grievances sorted by status
+        </p>
+        <ResponsiveContainer width="100%" height={350}>
+          <BarChart data={grievancesByStatusData}>
+            <XAxis dataKey="status" />
+            <YAxis />
+            <Bar dataKey="count" fill="#1215c8" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </>
   );

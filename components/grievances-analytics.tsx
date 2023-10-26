@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card"
 import CustomPieChart from "./graphs/chart";
 import { useEffect, useState } from "react";
+import { RefreshCw } from "lucide-react";
 
 async function getAllChartData({ type }: { type: "all" | "user" }) {
   let result = [];
@@ -32,10 +33,10 @@ async function getAllChartData({ type }: { type: "all" | "user" }) {
     result = await res.json();
   }
   const fill = ["#0088FE", "#00C49F", "#FF6384", "#FFF121"]
-  return Object.entries(result).map(([header, values], index) => ({
+  return Object.entries(result).map(([header, values]) => ({
     header: header,
     description: `Total grievances ${header.toLowerCase()} till date`,
-    data: Object.entries(values).map(([name, value]) => ({
+    data: Object.entries(values).map(([name, value], index) => ({
       name: name,
       value: value,
       fill: fill[index]
@@ -45,27 +46,35 @@ async function getAllChartData({ type }: { type: "all" | "user" }) {
 
 export default function GrievianceAnalyticsSection({ type }: { type: "all" | "user" }) {
   const [chartData, setChartData] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     getAllChartData({ type }).then((data) => {
       setChartData(data);
+      setLoading(false)
     });
   }, []);
-  return (// components/ScrollArea.js
+  return (
     <section className="grid lg:grid-cols-3 sm:flex-col p-3 justify-items-center gap-x-2" >
       {
-        chartData.map((data, index) => {
-          return (
-            <Card className="p-7 w-full" key={index}>
-              <CardHeader className="p-0 m-0">
-                <CardTitle >{data.header}</CardTitle>
-                <CardDescription>{data.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="p-3">
-                <CustomPieChart data={data.data} />
-              </CardContent>
-            </Card>
-          )
-        })
+        loading ? (
+          <div className="flex justify-center  p-5">
+            <RefreshCw className="animate-spin w-5 h-5" />
+          </div>
+        ) : (
+          chartData.map((data, index) => {
+            return (
+              <Card className="p-7 w-full" key={index}>
+                <CardHeader className="p-0 m-0">
+                  <CardTitle >{data.header}</CardTitle>
+                  <CardDescription>{data.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <CustomPieChart data={data.data} />
+                </CardContent>
+              </Card>
+            )
+          })
+        )
       }
     </section >
   )

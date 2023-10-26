@@ -118,7 +118,7 @@ export function OverviewTab() {
           <CardHeader>
             <CardTitle>Members joined</CardTitle>
             <CardDescription>
-              {count} {count > 1 ? " members " : " member "} joined till date
+              {count.toString()} {count > 1 ? " members " : " member "} joined till date
             </CardDescription>
           </CardHeader>
           <CardContent>

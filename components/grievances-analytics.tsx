@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 
 
 async function getAllChartData({ type }: { type: "all" | "user" }) {
-  const [result, setResult] = useState([]);
+  let result = [];
   if (type === "all") {
     const res = await fetch(`https://samchar.vercel.app/api/chart`, {
       method: "GET",
@@ -22,7 +22,7 @@ async function getAllChartData({ type }: { type: "all" | "user" }) {
       },
     });
     const data = await res.json();
-    setResult(data);
+    result = data;
   } else {
     const res = await fetch(`https://samchar.vercel.app/api/chart`, {
       method: "GET",
@@ -32,7 +32,7 @@ async function getAllChartData({ type }: { type: "all" | "user" }) {
       },
     });
     const data = await res.json();
-    setResult(data);
+    result = data;
   }
   return result;
 }

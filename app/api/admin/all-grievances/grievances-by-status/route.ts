@@ -1,7 +1,12 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
+import { getCurrentUser } from "@/lib/session";
 
 export async function GET(req: Request) {
+  const user = getCurrentUser();
+  if (!user) {
+    return NextResponse.json({ message: "User not logged in" }, { status: 401 });
+  }
   const totalGrievancesPending = await db.grievance.findMany({
     where: {
       status: "Pending",

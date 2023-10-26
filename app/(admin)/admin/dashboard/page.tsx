@@ -1,4 +1,3 @@
-// Link -> /admin/dashboard
 import {
   Tabs,
   TabsList,
@@ -23,7 +22,7 @@ export default function DashboardPage() {
             Notifications
           </TabsTrigger>
         </TabsList>
-        <OverviewTab />
+        {/* <OverviewTab /> */}
         <ReportTab />
         <NotificationTab />
       </Tabs>

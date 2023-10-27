@@ -45,14 +45,14 @@ export default function GrievanceDetailCard({ id, title, posted, grievance, stat
   // use useCallBack to prevent infinite loop
   const handleUpvote = React.useCallback(() => {
     if (upvoted) {
-      fetch(`https://samchar.vercel.app/api/upvote?id=${id}`, {
+      fetch(`https://samchar.vercel.app/api/check-upvote?id=${id}`, {
         method: 'POST',
       }).then(() => {
         setUpvoted(false);
         setUpvoteCount(upvoteCount - 1);
       });
     } else {
-      fetch(`https://samchar.vercel.app/api/upvote?id=${id}`, {
+      fetch(`https://samchar.vercel.app/api/check-upvote?id=${id}`, {
         method: 'POST',
       }).then(() => {
         setUpvoted(true);

@@ -23,7 +23,7 @@ async function getAllChartData({ type }: { type: "all" | "user" }) {
     const data = await res.json();
     result = data;
   } else {
-    const res = await fetch(`https://samchar.vercel.app/api/chart`, {
+    const res = await fetch(`https://samchar.vercel.app/api/chart/user`, {
       method: "GET",
       cache: "no-store", // *default, no-cache, reload, force-cache, only-if-cached
       headers: {
@@ -57,8 +57,8 @@ export default function GrievianceAnalyticsSection({ type }: { type: "all" | "us
     <section className="grid lg:grid-cols-3 sm:flex-col p-3 justify-items-center gap-x-2" >
       {
         loading ? (
-          <div className="flex justify-center  p-5">
-            <RefreshCw className="animate-spin w-5 h-5" />
+          <div className="flex justify-center mx-auto p-5 ">
+            <RefreshCw className="animate-spin w-5 h-5 mx-auto" />
           </div>
         ) : (
           chartData.map((data, index) => {

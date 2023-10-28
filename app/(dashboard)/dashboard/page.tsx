@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: 'Grievances Page for user',
 }
 
-
 export default function GrievancesPage() {
   return (
     <div>

@@ -3,7 +3,6 @@ import GrievancesAnalyticsSection from "@/components/grievances-analytics"
 import TopCommentSection from "@/components/ui/top-comments-section"
 import RecentGrievanceSection from "@/components/ui/recent-grievance"
 import Link from "next/link"
-import { getCurrentUser } from "@/lib/session"
 
 export const metadata: Metadata = {
   title: 'Grievances',
@@ -11,8 +10,7 @@ export const metadata: Metadata = {
 }
 
 
-export default async function GrievancesPage() {
-  const user = await getCurrentUser();
+export default function GrievancesPage() {
   return (
     <div>
       <GrievancesAnalyticsSection type={"all"} />

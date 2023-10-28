@@ -54,29 +54,33 @@ export default function GrievianceAnalyticsSection({ type }: { type: "all" | "us
     });
   }, [type]);
   return (
-    <section className="grid lg:grid-cols-3 sm:flex-col p-3 justify-items-center gap-x-2" >
+    <>
       {
         loading ? (
-          <div className="flex-col justify-center mx-auto p-5 ">
-            <RefreshCw className="animate-spin w-5 h-5 mx-auto" />
-            <p className="text-muted-foreground">Loading Analytics Chart</p>
+          <div className="flex justify-center items-center">
+            <RefreshCw className="animate-spin h-5 w-5" />
+            <p className="text-center text-muted-foreground">Generating Analytics Chart</p>
           </div>
         ) : (
-          chartData.map((data, index) => {
-            return (
-              <Card className="p-7 w-full" key={index}>
-                <CardHeader className="p-0 m-0">
-                  <CardTitle >{data.header}</CardTitle>
-                  <CardDescription>{data.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="p-3">
-                  <CustomPieChart data={data.data} />
-                </CardContent>
-              </Card>
-            )
-          })
+          <section className="grid lg:grid-cols-3 sm:flex-col p-3 justify-items-center gap-x-2" >
+            {
+              chartData.map((data, index) => {
+                return (
+                  <Card className="p-7 w-full" key={index}>
+                    <CardHeader className="p-0 m-0">
+                      <CardTitle >{data.header}</CardTitle>
+                      <CardDescription>{data.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-3">
+                      <CustomPieChart data={data.data} />
+                    </CardContent>
+                  </Card>
+                )
+              })
+            }
+          </section >
         )
       }
-    </section >
+    </>
   )
 }

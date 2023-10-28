@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function GrievancesPage() {
   return (
-    <div>
+    <div className="flex-col justify-center">
       <GrievancesAnalyticsSection type={"all"} />
       <TopCommentSection />
       <div className="ml-auto p-5">

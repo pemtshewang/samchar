@@ -57,8 +57,9 @@ export default function GrievianceAnalyticsSection({ type }: { type: "all" | "us
     <section className="grid lg:grid-cols-3 sm:flex-col p-3 justify-items-center gap-x-2" >
       {
         loading ? (
-          <div className="flex justify-center mx-auto p-5 ">
+          <div className="flex-col justify-center mx-auto p-5 ">
             <RefreshCw className="animate-spin w-5 h-5 mx-auto" />
+            <p className="text-muted-foreground">Loading Analytics Chart</p>
           </div>
         ) : (
           chartData.map((data, index) => {

@@ -33,7 +33,8 @@ export function LoginUserAuthForm({ page }) {
   async function onSubmit(data: FormData) {
     setIsLoading(true);
     const signInResult = await signIn("email", {
-      email: data.email.toLowerCase(),
+      email: data.email,
+      redirect: false
     });
     setIsLoading(false);
     if (!signInResult?.ok) {

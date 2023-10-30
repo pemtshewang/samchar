@@ -15,7 +15,7 @@ export default async function UserGrievance() {
   });
   const grievance = grievances.length > 0 ? grievances[0] : null;
   return (
-    <section className="top__comments p-5 w-full space-y-3" >
+    <section className="top__comments p-5 w-full space-y-3 dark:bg-transparent" >
       {
         grievance ? (
           <GrievanceDetailCard

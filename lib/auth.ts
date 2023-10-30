@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
       },
       from: process.env.EMAIL_FROM,
       sendVerificationRequest: async (params) => {
-        const { identifier, url, provider, theme } = params
+        const { identifier, url, provider } = params
         const { host } = new URL(url)
         const user = await db.user.findUnique({
           where: {

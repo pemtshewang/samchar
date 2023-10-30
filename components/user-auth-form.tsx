@@ -34,10 +34,7 @@ export function LoginUserAuthForm({ page }) {
     setIsLoading(true);
     const signInResult = await signIn("email", {
       email: data.email.toLowerCase(),
-      redirect: false,
-      // callbackUrl: searchParams?.get("from") || "/dashboard",
     });
-
     setIsLoading(false);
     if (!signInResult?.ok) {
       return toast({

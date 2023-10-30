@@ -3,33 +3,11 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import EmailProvider from "next-auth/providers/email";
 import * as nodemailer from "nodemailer";
 import { db } from "./db";
-import { redirect } from "next/navigation";
 
 const adapter = PrismaAdapter(db) as any;
 
 export const authOptions: NextAuthOptions = {
   adapter,
-  events: {
-    // to create an avatar for the user
-    createUser: async (message) => {
-      const { email } = message.user;
-      const avatar = `
-      https://source.boringavatars.com/beam/120/${email.split(".cst")[0]}`;
-      await db.user.update({
-        where: {
-          email,
-        },
-        data: {
-          avatar,
-        },
-      });
-    },
-    // custom signout for session
-    // when user call this api, log out the session and redirect to login page
-    signOut: async ({ session }) => {
-      return redirect("/login");
-    }
-  },
   pages: {
     signIn: "/login",
   },
@@ -50,18 +28,16 @@ export const authOptions: NextAuthOptions = {
       },
       from: process.env.EMAIL_FROM,
       sendVerificationRequest: async (params) => {
+        const { identifier, url, provider, theme } = params
+        const { host } = new URL(url)
         const user = await db.user.findUnique({
           where: {
             email: params.identifier,
           },
           select: {
             emailVerified: true,
-            role: true,
-            avatar: true,
           },
         })
-        const { identifier, url, provider, theme } = params
-        const { host } = new URL(url)
         const emailVerified = user?.emailVerified;
         // NOTE: You are not required to use `nodemailer`, use whatever you want.
         const transport = nodemailer.createTransport(provider.server)
@@ -78,7 +54,7 @@ export const authOptions: NextAuthOptions = {
           from: provider.from,
           subject: emailVerified ? "Sign in link to Samchar" : "Verify your email address",
           text: text({ url, host }),
-          html: html({ url, host, theme }),
+          html: html({ url, host }),
         })
 
         const failed = result.rejected.concat(result.pending).filter(Boolean)
@@ -86,11 +62,11 @@ export const authOptions: NextAuthOptions = {
           throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`)
         }
 
-        function html(params: { url: string; host: string; theme: any }) {
-          const { url, host, theme } = params
+        function html(params: { url: string; host: string }) {
+          const { url } = params
 
           //get the button color of shadcn theme
-          const brandColor = theme.brandColor || "#000"
+          const brandColor = "#000"
           const color = {
             background: "#f9f9f9",
             text: "#444",
@@ -99,7 +75,7 @@ export const authOptions: NextAuthOptions = {
             // get the  button color of shadcn theme
             buttonBackground: brandColor,
             buttonBorder: brandColor,
-            buttonText: theme.buttonText || "#fff",
+            buttonText: "#fff",
           }
 
           return `

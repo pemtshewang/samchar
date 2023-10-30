@@ -19,6 +19,18 @@ interface DashboardLayoutProps {
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
+  const user = await getCurrentUser();
+  const userRole = await db.user.findUnique({
+    where: {
+      email: user.email,
+    },
+    select: {
+      role: true,
+    },
+  });
+  if (userRole?.role === "Admin") {
+    redirect("/");
+  }
   return (
     <html lang="en" className={cn(myFont.className)}>
       <body>

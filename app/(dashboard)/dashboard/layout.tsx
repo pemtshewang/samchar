@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils';
 import { SiteFooter } from '@/components/site-footer';
 import { UserNav } from '@/components/user-profile-nav';
 
-
 export default async function Layout({ children }) {
   return (
     <div className="min-h-screen">

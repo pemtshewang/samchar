@@ -2,6 +2,7 @@ import { withAuth } from "next-auth/middleware";
 import { db } from "./lib/db";
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
+import { getCurrentUser } from "./lib/session";
 
 export default withAuth(
   async function middleware(req) {
@@ -13,9 +14,20 @@ export default withAuth(
 
     if (isAuthPage) {
       if (isAuth) {
+        const user = await getCurrentUser();
+        const role = await db.user.findUnique({
+          where: {
+            email: user.email,
+          },
+          select: {
+            role: true,
+          },
+        })
+        if (role.role === "Admin") {
+          return NextResponse.redirect(new URL("/admin/dashboard", req.url))
+        }
         return NextResponse.redirect(new URL("/dashboard", req.url))
       }
-      return null
     }
 
     if (!isAuth) {
@@ -30,14 +42,14 @@ export default withAuth(
     }
   },
   {
-    callbacks: {
-      async authorized() {
-        // This is a work-around for handling redirect on auth pages.
-        // We return true here so that the middleware function above
-        // is always called.
-        return true
-      },
-    },
+    // callbacks: {
+    //   async authorized() {
+    //     // This is a work-around for handling redirect on auth pages.
+    //     // We return true here so that the middleware function above
+    //     // is always called.
+    //     return true
+    //   },
+    // },
   },
 );
 

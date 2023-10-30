@@ -3,6 +3,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import localFont from 'next/font/local'
 import { Toaster } from "@/components/ui/toaster"
+import { getCurrentUser } from "@/lib/session";
+import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
 
 const myFont = localFont({
   src: '../assets/fonts/static/Inter-Regular.ttf',
@@ -16,7 +19,22 @@ interface DashboardLayoutProps {
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
-
+  const user = await getCurrentUser();
+  if (user) {
+    const userRole = await db.user.findUnique({
+      where: {
+        email: user.email
+      },
+      select: {
+        role: true
+      }
+    })
+    if (userRole.role === 'Admin') {
+      redirect('/admin/dashboard')
+    } else {
+      redirect('/dashboard');
+    }
+  }
   return (
     <html lang="en" className={cn(myFont.className)}>
       <body>

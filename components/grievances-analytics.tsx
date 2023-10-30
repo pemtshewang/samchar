@@ -85,3 +85,4 @@ export default function GrievianceAnalyticsSection({ type }: { type: "all" | "us
     </>
   )
 }
+

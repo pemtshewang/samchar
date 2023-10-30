@@ -1,7 +1,6 @@
 import AuthPageHeader from "@/components/auth-header"
 import { SiteFooter } from "@/components/site-footer"
 import { getCurrentUser } from "@/lib/session";
-import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 export default async function Layout({ children }: {
@@ -12,25 +11,12 @@ export default async function Layout({ children }: {
     redirect("/admin/login");
   }
   // if user exists then do this
-  if (user) {
-    const userRole = await db.user.findUnique({
-      where: {
-        email: user.email,
-      },
-      select: {
-        role: true,
-      },
-    });
-    if (userRole?.role === "User") {
-      redirect("/");
-    }
-    return (
-      <div className="">
-        <AuthPageHeader />
-        <div className="p-10">
-          {children}
-        </div>
-        <SiteFooter />
-      </div>)
-  }
+  return (
+    <div className="">
+      <AuthPageHeader />
+      <div className="p-10">
+        {children}
+      </div>
+      <SiteFooter />
+    </div>)
 }

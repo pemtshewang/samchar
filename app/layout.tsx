@@ -29,7 +29,7 @@ export default async function DashboardLayout({
     },
   });
   if (userRole?.role === "Admin") {
-    redirect("/");
+    redirect("/admin/dashboard");
   }
   return (
     <html lang="en" className={cn(myFont.className)}>

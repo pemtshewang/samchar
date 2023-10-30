@@ -23,9 +23,9 @@ export default async function Layout({ children }) {
     redirect("/admin/dashboard");
   }
   return (
-    <div>
+    <div className="min-h-screen">
       <AuthPageHeader />
-      <div className='flex justify-between pt-5 min-h-screen'>
+      <div className='flex justify-between pt-5 h-screen'>
         <DashboardNav />
         <UserNav />
       </div>

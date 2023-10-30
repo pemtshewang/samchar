@@ -25,7 +25,7 @@ export default async function Layout({ children }) {
   return (
     <div className="min-h-screen">
       <AuthPageHeader />
-      <div className='flex justify-between pt-5 h-screen'>
+      <div className='flex justify-between pt-5'>
         <DashboardNav />
         <UserNav />
       </div>

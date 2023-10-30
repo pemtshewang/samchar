@@ -13,7 +13,6 @@ import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { grievanceSchema } from "@/lib/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation"
 import { toast } from "./ui/use-toast"
 import { useState } from "react"
 import { Icons } from "./icons"
@@ -104,7 +103,7 @@ export function AddGrievanceComponent({ edit, title, id, description, category }
     <form method="post" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid w-full gap-2 space-y-5 p-5">
         <div>
-          <input type="text" id="title"  {...register("title")} placeholder="Enter your Grievance Title" className="placeholder-gray-600 w-full focus:outline-none text-xl pl-2 bg-transparent font-bold" maxLength={50} defaultValue={title} />
+          <input type="text" id="title"  {...register("title")} autoFocus placeholder="Enter your Grievance Title" className="placeholder-gray-600 w-full focus:outline-none text-xl pl-2 bg-transparent font-bold" maxLength={50} defaultValue={title} />
           {errors.title && <span className="text-red-500 text-sm">Title is required</span>}
         </div>
         <div className="category" id="category" {...register('category')}>

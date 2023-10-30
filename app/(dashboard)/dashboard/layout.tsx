@@ -29,7 +29,7 @@ export default async function Layout({ children }) {
         <DashboardNav />
         <UserNav />
       </div>
-      <div className={cn("w-full border-2 border-primary-foreground min-h-screen")}>
+      <div className={cn("w-full border-2 border-primary-foreground min-h-screen p-5")}>
         {children}
       </div>
       <SiteFooter />

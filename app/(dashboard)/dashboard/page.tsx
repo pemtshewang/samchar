@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 export default async function GrievancesPage() {
   return (
     <div className="flex-col justify-center">
-      {/* <GrievancesAnalyticsSection type="all" /> */}
       <TopCommentSection />
+      <GrievancesAnalyticsSection type="all" />
       <div className="ml-auto p-5">
         To see all grievances posted by users, go to
         <Link href="/dashboard/grievances/all-grievances" className="underline italic">See all grievances</Link>

@@ -27,7 +27,7 @@ export default async function GrievancesPage() {
   }
   return (
     <div className="flex-col justify-center">
-      <GrievancesAnalyticsSection type="all" />
+      {/* <GrievancesAnalyticsSection type="all" /> */}
       <TopCommentSection />
       <div className="ml-auto p-5">
         To see all grievances posted by users, go to

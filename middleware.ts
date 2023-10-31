@@ -13,23 +13,7 @@ export default withAuth(
 
     if (isAuthPage) {
       if (isAuth) {
-        return NextResponse.redirect(new URL("/dashboard", req.url))
-
-        // const user = await db.user.findUnique({
-        //   where: {
-        //     email: token?.email,
-        //   },
-        //   select: {
-        //     role: true,
-        //   },
-        // });
-        // if (user?.role === "Admin") {
-        //   return NextResponse.redirect(new URL("/admin/dashboard", req.url));
-        // }
-        // if (user?.role === "User") {
-        //   return NextResponse.redirect(new URL("/dashboard", req.url));
-        // }
-        return null
+        return NextResponse.redirect(new URL("/dashboard/my-grievances", req.url))
       }
       return null
     }

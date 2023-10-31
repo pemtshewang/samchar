@@ -13,18 +13,6 @@ export const metadata: Metadata = {
 }
 
 export default async function GrievancesPage() {
-  const user = await getCurrentUser();
-  const userRole = await db.user.findUnique({
-    where: {
-      email: user.email,
-    },
-    select: {
-      role: true,
-    },
-  });
-  if (userRole?.role === "Admin") {
-    redirect("/admin/dashboard");
-  }
   return (
     <div className="flex-col justify-center">
       {/* <GrievancesAnalyticsSection type="all" /> */}

@@ -4,8 +4,23 @@ import DashboardNav from '@/components/dashboard-nav';
 import { cn } from '@/lib/utils';
 import { SiteFooter } from '@/components/site-footer';
 import { UserNav } from '@/components/user-profile-nav';
+import { getCurrentUser } from '@/lib/session';
+import { db } from '@/lib/db';
+import { redirect } from 'next/navigation';
 
 export default async function Layout({ children }) {
+  const user = await getCurrentUser();
+  const role = await db.user.findUnique({
+    where: {
+      email: user.email
+    },
+    select: {
+      role: true
+    }
+  })
+  if (role.role === "Admin") {
+    redirect("/admin/dashboard");
+  }
   return (
     <div className="min-h-screen">
       <AuthPageHeader />

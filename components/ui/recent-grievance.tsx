@@ -41,7 +41,7 @@ export default function RecentGrievanceSection() {
     <section className="top__recent p-5 w-full">
       {
         loading ? (
-          <div className="flex flext-col justify-center items-center p-5">
+          <div className="flex flex-col justify-center items-center p-5">
             <RefreshCw className="animate-spin h-5 w-5" />
             <p className="text-center text-muted-foreground">Loading Recent Grievance</p>
           </div>

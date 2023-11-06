@@ -28,7 +28,15 @@ export default withAuth(
       );
     }
   },
+  {
+    callbacks: {
+      async authorized() {
+        return true
+      },
+    },
+  },
 );
+
 export const config = {
   matcher: ["/dashboard", "/admin"],
 };

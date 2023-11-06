@@ -36,6 +36,7 @@ export default function AllGrievancesPage() {
         <Button
           onClick={() => {
             getGrievances().then((grievances) => {
+              setLoading(true);
               setGrievances(grievances);
               setLoading(false);
             });
@@ -47,7 +48,7 @@ export default function AllGrievancesPage() {
           <span>Refresh</span>
         </Button>
       </div>
-      <div className="space-y-3">
+      <div className="space-y-3 p-5">
         {
           loading ? (
             <div className="flex flex-col justify-center text-center p-5 italic">

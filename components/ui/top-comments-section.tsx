@@ -48,7 +48,6 @@ export default function TopCommentSection() {
           </div>
         ) : (
           <div className="flex flex-col justify-center items-center">
-            <h1 className="text-xl font-bold p-2">Top Commented Grievance</h1>
             {
               grievance ? (
                 <GrievanceCard

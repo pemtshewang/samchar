@@ -40,7 +40,6 @@ export async function GET(request: Request): Promise<NextResponse> {
   // check if user is logged in
   const grievances = await db.grievance.findMany({
     where: {
-      email: user?.email,
       adminChecked: true,
     },
     orderBy: {

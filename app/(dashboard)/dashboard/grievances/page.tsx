@@ -50,8 +50,9 @@ export default function AllGrievancesPage() {
       <div className="space-y-3">
         {
           loading ? (
-            <div className="text-center p-5 italic">
-              Refreshing...
+            <div className="flex flex-col justify-center text-center p-5 italic">
+              <RefreshCw className="animate-spin w-10 h-10 mx-auto" />
+              <p className="text-center text-muted-foreground">Checking for all grievances</p>
             </div>
           ) : (
             grievances.length > 0 ? (

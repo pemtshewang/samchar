@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/session";
 
-export default async function GET(request: Request) {
+export async function GET(request: Request) {
   const user = await getCurrentUser();
   const grievance = await db.grievance.findMany({
     orderBy: {

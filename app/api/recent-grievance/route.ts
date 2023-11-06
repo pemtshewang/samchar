@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/session";
 import { db } from "@/lib/db";
-export default async function GET(request: Request) {
+
+export async function GET(request: Request) {
   const user = await getCurrentUser();
   const grievances = await db.grievance.findMany({
     where: {

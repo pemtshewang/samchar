@@ -57,7 +57,7 @@ export default function GrievianceAnalyticsSection({ type }: { type: "all" | "us
     <>
       {
         loading ? (
-          <div className="flex justify-center items-center">
+          <div className="flex flex-col justify-center items-center p-5">
             <RefreshCw className="animate-spin h-5 w-5" />
             <p className="text-center text-muted-foreground">Generating Analytics Chart</p>
           </div>

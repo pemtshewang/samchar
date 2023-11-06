@@ -42,7 +42,7 @@ export default function TopCommentSection() {
     <section className="top__comments p-5 w-full">
       {
         loading ? (
-          <div className="flex justify-center items-center">
+          <div className="flex flex-col justify-center items-center p-5">
             <RefreshCw className="animate-spin h-5 w-5" />
             <p className="text-center text-muted-foreground">Loading Top Grievance</p>
           </div>

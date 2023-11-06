@@ -1,51 +1,75 @@
+"use client";
+import { useState, useEffect } from "react";
 import GrievanceCard from "../grievance-card"
-import { Icons } from "../icons";
-import { TypographyH4 } from "../typography/typography";
-import { db } from "@/lib/db";
+import { RefreshCw } from "lucide-react";
 
-export function PaddedIcon({ Icon }) {
-  return (
-    <div className="h-full">
-      <div className="border-2 border-secondary-foreground rounded-full p-2 mr-5">
-        {Icon}
-      </div>
-    </div>
-  )
-}
-
-export default async function TopCommentSection() {
-  const grievance = await db.grievance.findMany({
-    orderBy: {
-      Vote: {
-        _count: "desc"
-      }
+async function getTopGrievance(): Promise<{
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  status: string;
+  datePosted: string;
+}> {
+  const res = await fetch(`https://samchar.vercel.app/api/top-comments/`, {
+    method: "GET",
+    cache: "no-store", // *default, no-cache, reload, force-cache, only-if-cached
+    headers: {
+      "Content-Type": "application/json",
     },
   });
-  const topGrievance = grievance.length > 0 ? grievance[0] : null;
+  const data = await res.json();
+  return data;
+}
+
+export default function TopCommentSection() {
+  const [grievance, setGrievance] = useState<{
+    id: string;
+    title: string;
+    description: string;
+    category: string;
+    status: string;
+    datePosted: string;
+  }>()
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getTopGrievance().then((data) => {
+      setGrievance(data);
+      setLoading(false)
+    });
+  }, []);
   return (
     <section className="top__comments p-5 w-full">
       {
-        topGrievance ? (
-          <GrievanceCard
-            header="Top upvoted grievance"
-            id={topGrievance.id}
-            type="top"
-            title={topGrievance.title}
-            posted={new Date(topGrievance.datePosted).toLocaleDateString()}
-            grievance={topGrievance.description}
-            status={topGrievance.status}
-            category={topGrievance.category}
-          />
+        loading ? (
+          <div className="flex justify-center items-center">
+            <RefreshCw className="animate-spin h-5 w-5" />
+            <p className="text-center text-muted-foreground">Loading Top Grievance</p>
+          </div>
         ) : (
-          <section className="card w-full flex-col border  rounded-md border-secondary-foreground p-5  h-[30vh]">
-            <div className="flex">
-              <PaddedIcon Icon={<Icons.up />} />
-              <TypographyH4 className="tracking-wide">Top Upvoted Grievance</TypographyH4>
-            </div>
-            <div className="h-full">
-              <p className="text-center text-muted-foreground italic">No top upvoted grievance. Be the first one to do it.</p>
-            </div>
-          </section>
+          <div className="flex flex-col justify-center items-center">
+            <h1 className="text-xl font-bold p-2">Top Commented Grievance</h1>
+            {
+              grievance ? (
+                <GrievanceCard
+                  header="Top Commented Grievance"
+                  type="top"
+                  title={grievance.title}
+                  posted={new Date(grievance.datePosted).toLocaleDateString()}
+                  grievance={grievance.description}
+                  status={grievance.status}
+                  category={grievance.category}
+                  id={grievance.id}
+                  key={grievance.id} />
+              ) : (
+                <div className="flex flex-col justify-center items-center">
+                  <h1 className="text-xl font-bold p-2">Top Commented Grievance</h1>
+                  <p className="text-lg font-bold p-1 text-muted-foreground">No Grievances Posted Yet</p>
+                  <p className="text-lg text-gray-500 text-muted-foreground">Check back later</p>
+                </div>
+              )
+            }
+          </div>
         )
       }
     </section>

@@ -1,3 +1,4 @@
+"use client"
 export default function StatusIndicator({ status }) {
   const color = status === 'Resolved' ? 'bg-green-500' : status === 'Pending' ? 'bg-yellow-500' : 'bg-red-500';
   return (

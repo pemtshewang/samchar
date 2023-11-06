@@ -1,9 +1,11 @@
+"use client";
 import { TypographyH4, TypographyLead, TypographyP } from "./typography/typography"
 import { Icons } from "./icons"
 import { cn } from "@/lib/utils"
 import StatusIndicator from "./status";
 import CategoryUI from "./category";
-import { db } from "@/lib/db";
+import { useEffect, useState } from "react";
+import { RefreshCw } from "lucide-react";
 
 export function PaddedIcon({ Icon }) {
   return (
@@ -14,12 +16,27 @@ export function PaddedIcon({ Icon }) {
     </div>
   )
 }
-export default async function GrievanceCard({ id, header, title, posted, grievance, type, status, category }) {
-  const upvotes = await db.vote.count({
-    where: {
-      grievanceId: id
-    }
+async function getTotalUpvotes(id) {
+  const res = await fetch(`https://samchar.vercel.app/api/total-upvotes?id=${id}`, {
+    method: "GET",
+    cache: "no-store", // *default, no-cache, reload, force-cache, only-if-cached
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
+  const data = await res.json();
+  return data;
+}
+
+export default function GrievanceCard({ id, header, title, posted, grievance, type, status, category }) {
+  const [upvotes, setUpvotes] = useState(0);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getTotalUpvotes(id).then((data) => {
+      setUpvotes(data);
+      setLoading(false)
+    });
+  }, [id]);
   return (
     <div className={cn("card w-full flex border  rounded-md border-secondary-foreground p-5")}>
       {
@@ -38,7 +55,15 @@ export default async function GrievanceCard({ id, header, title, posted, grievan
         </div>
         <div className="flex mt-5 items-center gap-1">
           <Icons.up />
-          {upvotes}
+          {
+            loading ? (
+              <div className="flex justify-center items-center">
+                <RefreshCw className="animate-spin h-2 w-2" />
+              </div>
+            ) : (
+              <TypographyP>{upvotes}</TypographyP>
+            )
+          }
           <CategoryUI category={category} />
           <StatusIndicator status={status} />
         </div>

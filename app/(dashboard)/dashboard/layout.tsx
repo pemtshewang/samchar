@@ -9,6 +9,7 @@ import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
 
 export default async function Layout({ children }) {
+  // modified
   const user = await getCurrentUser();
   const role = await db.user.findUnique({
     where: {
@@ -21,6 +22,7 @@ export default async function Layout({ children }) {
   if (role.role === "Admin") {
     redirect("/admin/dashboard");
   }
+  // modified ends
   return (
     <div className="min-h-screen">
       <AuthPageHeader />

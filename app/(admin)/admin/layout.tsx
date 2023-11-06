@@ -20,7 +20,7 @@ export default async function Layout({ children }: {
     }
   })
   if (userRole.role !== "Admin") {
-    redirect("/dashboard/my-grievances");
+    redirect("/dashboard");
   }
   // if user exists then do this
   return (

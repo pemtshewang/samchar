@@ -43,5 +43,7 @@ export async function GET(req: Request) {
 
     grievanceCountByCategoryAndStatus[status][category]++;
   }
+  // remove the Filtered category
+  delete grievanceCountByCategoryAndStatus["Filtered"];
   return NextResponse.json(grievanceCountByCategoryAndStatus);
 }

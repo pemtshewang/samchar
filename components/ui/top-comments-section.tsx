@@ -51,7 +51,7 @@ export default function TopCommentSection() {
             {
               grievance ? (
                 <GrievanceCard
-                  header="Top Commented Grievance"
+                  header="Top Upvoted Grievance"
                   type="top"
                   title={grievance.title}
                   posted={new Date(grievance.datePosted).toLocaleDateString()}
